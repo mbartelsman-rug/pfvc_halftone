@@ -36,13 +36,27 @@ pub fn build(b: *std.Build) !void {
     exe.linkLibrary(raylib_artifact);
     exe.root_module.addImport("raylib", raylib);
 
+    // Install data
+    const install_data = b.addInstallDirectory(.{
+        .source_dir = .{ .src_path = .{ .owner = b, .sub_path = "./resources/" }},
+        .install_dir = .{ .prefix = {} },
+        .install_subdir = "./resources/",
+    });
+
+    // Install
+    const install = b.getInstallStep();
+    install.dependOn(&install_data.step);
+
+    // Run cmd
     const run_cmd = b.addRunArtifact(exe);
-    const run_step = b.step("run", "Run test");
+    run_cmd.step.dependOn(install);
 
     if (b.args) |args| {
         run_cmd.addArgs(args);
     }
 
+    // Run step
+    const run_step = b.step("run", "Run test");
     run_step.dependOn(&run_cmd.step);
 
     b.installArtifact(exe);
