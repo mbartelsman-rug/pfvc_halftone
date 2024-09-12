@@ -1,5 +1,6 @@
 const std = @import("std");
 const rl = @import("raylib");
+const colors = @import("colors.zig");
 
 pub fn main() anyerror!void {
     var allocator = std.heap.GeneralPurposeAllocator(.{}){};
@@ -28,17 +29,30 @@ pub fn main() anyerror!void {
 
     // Initialization
     //--------------------------------------------------------------------------------------
-    const image = rl.loadImage(input);
+    var image = rl.loadImage(input);
     defer rl.unloadImage(image);
 
     if (image.height <= 0 or image.width <= 0)
         return error.InvalidImage;
 
-    const screenWidth = image.width;
-    const screenHeight = image.height;
+    const screenWidth: i32 = @intCast(image.width);
+    const screenHeight: i32 = @intCast(image.height);
 
     rl.initWindow(screenWidth, screenHeight, "Halftone");
     defer rl.closeWindow();
+
+    const data = try rl.loadImageColors(image);
+    for (0..@intCast(image.width)) |i| {
+        for (0..@intCast(image.height)) |j| {
+            const color = data[@as(usize, @intCast(image.width)) * j + i];
+            const rgb = colors.Rgb{ .r = color.r, .g = color.g, .b = color.b };
+            // const luv = rgb.to_xyz().to_luv();
+            // const luv_2 = colors.Luv{ .l = luv.l, .u = luv.u, .v = luv.v };
+            const rgb_2 = rgb.to_xyz().to_luv().to_xyz().to_rgb();
+
+            rl.imageDrawPixel(&image, @intCast(i), @intCast(j), rl.Color{ .r = rgb_2.r, .g = rgb_2.g, .b = rgb_2.b, .a = 255 });
+        }
+    }
 
     rl.setTargetFPS(60);
     //--------------------------------------------------------------------------------------
