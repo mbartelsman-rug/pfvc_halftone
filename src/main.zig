@@ -42,16 +42,31 @@ pub fn main() anyerror!void {
     defer rl.closeWindow();
 
     const data = try rl.loadImageColors(image);
-    for (0..@intCast(image.width)) |i| {
-        for (0..@intCast(image.height)) |j| {
-            const color = data[@as(usize, @intCast(image.width)) * j + i];
+    var ls: [10]usize = .{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+    var total: usize = 0;
+
+    for (0..@intCast(screenWidth)) |i| {
+        for (0..@intCast(screenHeight)) |j| {
+            const color = data[@as(usize, @intCast(screenWidth)) * j + i];
             const rgb = colors.Rgb{ .r = color.r, .g = color.g, .b = color.b };
-            // const luv = rgb.to_xyz().to_luv();
-            // const luv_2 = colors.Luv{ .l = luv.l, .u = luv.u, .v = luv.v };
-            const rgb_2 = rgb.to_xyz().to_luv().to_xyz().to_rgb();
+            const luv = rgb.to_xyz().to_luv();
+            const luv_2 = colors.Luv{ .l = 0.1, .u = luv.u, .v = luv.v };
+
+            ls[@min(9, @as(usize, @intFromFloat(luv.l * 10.0)))] += 1;
+            total += 1;
+
+            const rgb_2 = luv_2.to_xyz().to_rgb();
 
             rl.imageDrawPixel(&image, @intCast(i), @intCast(j), rl.Color{ .r = rgb_2.r, .g = rgb_2.g, .b = rgb_2.b, .a = 255 });
         }
+    }
+
+    std.debug.print("Total = {}\n", .{ total });
+    for (ls) |count| {
+        for (0..(count * 80) / total) |_| {
+            std.debug.print("#", .{});
+        }
+        std.debug.print("\n", .{});
     }
 
     rl.setTargetFPS(60);
