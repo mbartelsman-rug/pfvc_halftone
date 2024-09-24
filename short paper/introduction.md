@@ -1,1 +1,4 @@
 # 1. Introduction
+
+The aim of this project is to investigate the performance and quality of the entropy-constrained threshold-modulated structure-aware error-diffusion (henceforth EC-SAED) when used over different underlying error diffusion techniques, such as hybrid ordered dithering, Sierra dithering, Blue-noise mask dithering, Floyd-Steinberg ED, Atkinson ED, Ostromoukhov's ED, and modulated-noise-threshold ED.
+To this end, we will be comparing the results using the median structural similarity index measure (MSSIM) as well as comparing reported participant similarity to the original source image and participant preference.
