@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vite + Vue + TS</title>
+    <style>
+      .experiment-container {
+        margin: 0 auto;
+        display: flex;
+        flex-flow: row wrap;
+        align-items: stretch;
+        justify-content: center;
+      }
+      .sample-container {
+        width: calc(100px + 14vw);
+        margin: 1em;
+        padding: 1em;
+      }
+      .sample-img {
+        max-width: 100%;
+      }
+      .sample-rank-container {
+        text-align: left;
+        margin-top: 1em;
+        width: 100%;
+        display: flex;
+        flex-flow: row wrap;
+        align-items: stretch;
+        justify-content: center;
+      }
+      .sample-rank-option {
+        margin: 0.25em 0.25em;
+      }
+    </style>
+  </head>
+  <body>
+    <form action="" class="experiment-container">
+      <fieldset class="sample-container">
+        <img class="sample-img" src="https://placehold.co/600x600">
+        <div class="sample-rank-container">
+          <button id="1A" class="sample-rank-option" type="button">&nbsp;A&nbsp;</button>
+          <button id="1B" class="sample-rank-option" type="button">&nbsp;B&nbsp;</button>
+          <button id="1C" class="sample-rank-option" type="button">&nbsp;C&nbsp;</button>
+          <button id="1D" class="sample-rank-option" type="button">&nbsp;D&nbsp;</button>
+        </div>
+      </fieldset>
+      <fieldset class="sample-container">
+        <img class="sample-img" src="https://placehold.co/600x600">
+        <div class="sample-rank-container">
+          <button id="2A" class="sample-rank-option" type="button">&nbsp;A&nbsp;</button>
+          <button id="2B" class="sample-rank-option" type="button">&nbsp;B&nbsp;</button>
+          <button id="2C" class="sample-rank-option" type="button">&nbsp;C&nbsp;</button>
+          <button id="2D" class="sample-rank-option" type="button">&nbsp;D&nbsp;</button>
+        </div>
+      </fieldset>
+      <fieldset class="sample-container">
+        <img class="sample-img" src="https://placehold.co/600x600">
+        <div class="sample-rank-container">
+          <button id="3A" class="sample-rank-option" type="button">&nbsp;A&nbsp;</button>
+          <button id="3B" class="sample-rank-option" type="button">&nbsp;B&nbsp;</button>
+          <button id="3C" class="sample-rank-option" type="button">&nbsp;C&nbsp;</button>
+          <button id="3D" class="sample-rank-option" type="button">&nbsp;D&nbsp;</button>
+        </div>
+      </fieldset>
+      <fieldset class="sample-container">
+        <img class="sample-img" src="https://placehold.co/600x600">
+        <div class="sample-rank-container">
+          <button id="4A" class="sample-rank-option" type="button">&nbsp;A&nbsp;</button>
+          <button id="4B" class="sample-rank-option" type="button">&nbsp;B&nbsp;</button>
+          <button id="4C" class="sample-rank-option" type="button">&nbsp;C&nbsp;</button>
+          <button id="4D" class="sample-rank-option" type="button">&nbsp;D&nbsp;</button>
+        </div>
+      </fieldset>
+    </form>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
