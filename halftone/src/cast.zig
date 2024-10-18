@@ -28,9 +28,9 @@ fn Float(comptime size: u16) type {
 
 pub fn int(comptime size: u16, value: anytype) Int(size) {
     return switch (@typeInfo(@TypeOf(value))) {
-        .Int => @as(Int(size), @intCast(value)),
+        .ComptimeInt, .Int => @as(Int(size), @intCast(value)),
         .Bool => @as(Int(size), @intFromBool(value)),
-        .Float => @as(Int(size), @intFromFloat(value)),
+        .ComptimeFloat, .Float => @as(Int(size), @intFromFloat(value)),
         .Enum => @as(Int(size), @intFromEnum(value)),
         .Pointer => @as(Int(size), @intFromPtr(value)),
         .ErrorUnion, .ErrorSet => @as(Int(size), @intFromError(value)),
@@ -40,9 +40,9 @@ pub fn int(comptime size: u16, value: anytype) Int(size) {
 
 pub fn uint(comptime size: u16, value: anytype) Uint(size) {
     return switch (@typeInfo(@TypeOf(value))) {
-        .Int => @as(Uint(size), @intCast(value)),
+        .ComptimeInt, .Int => @as(Uint(size), @intCast(value)),
         .Bool => @as(Uint(size), @intFromBool(value)),
-        .Float => @as(Uint(size), @intFromFloat(value)),
+        .ComptimeFloat, .Float => @as(Uint(size), @intFromFloat(value)),
         .Enum => @as(Uint(size), @intFromEnum(value)),
         .Pointer => @as(Uint(size), @intFromPtr(value)),
         .ErrorUnion, .ErrorSet => @as(Uint(size), @intFromError(value)),
@@ -52,8 +52,8 @@ pub fn uint(comptime size: u16, value: anytype) Uint(size) {
 
 pub fn float(comptime size: u16, value: anytype) Float(size) {
     return switch (@typeInfo(@TypeOf(value))) {
-        .Int => @as(Float(size), @floatFromInt(value)),
-        .Float => @as(Float(size), @floatCast(value)),
+        .ComptimeInt, .Int => @as(Float(size), @floatFromInt(value)),
+        .ComptimeFloat, .Float => @as(Float(size), @floatCast(value)),
         else => @compileError("Unsupported source type"),
     };
 }

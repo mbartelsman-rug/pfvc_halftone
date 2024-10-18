@@ -2,74 +2,17 @@ const std = @import("std");
 const zigimg = @import("zigimg");
 const zargs = @import("zargs");
 
+const args = @import("arguments.zig");
+const Options = args.Options;
+
 const coloring = @import("coloring.zig");
 const toLinearGrayscale = coloring.toLinearGrayscale;
 
+const bilinear = @import("resampling/bilinear.zig");
+const nearestNeighbour = @import("resampling/nearestNeighbour.zig");
+
 const ed = @import("errorDiffusion.zig");
 
-pub const Args = struct {
-    input: ?[]const u8 = null,
-    output: ?[]const u8 = null,
-    gamma: f32 = 2.2,
-    mode: Options.Mode = Options.Mode.@"floyd-steinberg",
-
-    // This declares short-hand options for single hyphen
-    pub const shorthands = .{
-        .i = "input",
-        .o = "output",
-        .g = "gamma",
-        .m = "mode",
-    };
-};
-
-pub const Options = struct {
-    input: []const u8,
-    output: []const u8,
-    gamma: f32,
-    mode: Mode,
-
-    allocator: std.mem.Allocator,
-
-    const Mode = enum (u8) {
-        none,
-        grayscale,
-        threshold,
-        @"floyd-steinberg",
-        atkinson,
-        jarvis,
-        _,
-    };
-
-    pub fn parseArgs(allocator: std.mem.Allocator) !Options {
-        const parsedArgs = try zargs.parseForCurrentProcess(Args, allocator, .print);
-        defer parsedArgs.deinit();
-
-        if (parsedArgs.options.input == null) {
-            std.debug.print("Input not specified", .{});
-            return error.NoInput;
-        }
-
-        if (parsedArgs.options.output == null) {
-            std.debug.print("Output not specified", .{});
-            return error.NoOutput;
-        }
-
-        const options = Options {
-            .input = try allocator.dupe(u8, parsedArgs.options.input.?),
-            .output = try allocator.dupe(u8, parsedArgs.options.output.?),
-            .gamma = parsedArgs.options.gamma,
-            .mode = parsedArgs.options.mode,
-            .allocator = allocator,
-        };
-
-        return options;
-    }
-
-    pub fn deinit(self: @This()) void {
-        self.allocator.free(self.input);
-        self.allocator.free(self.output);
-    }
-};
 
 pub fn main() !void {
     var gpa = std.heap.GeneralPurposeAllocator(.{}){};
@@ -77,7 +20,8 @@ pub fn main() !void {
 
     const options = try Options.parseArgs(gpa.allocator());
     defer options.deinit();
-        
+    
+    // Read base image
     var colorImg = try zigimg.Image.fromFilePath(gpa.allocator(), options.input);
     defer colorImg.deinit();
 
@@ -86,6 +30,7 @@ pub fn main() !void {
         return;
     }
 
+    // Convert to grayscale
     var grayImg = try toLinearGrayscale(gpa.allocator(), colorImg, options.gamma);
     defer grayImg.deinit();
 
@@ -94,31 +39,38 @@ pub fn main() !void {
         return;
     }
 
-    const edOpts = switch (options.mode) {
-        .threshold => ed.ErrorDiffusionOpts {
-            .diffuser = ed.Diffusers.none,
-            .diffuserLimits = ed.Diffusers.noneLimits,
-            .quantizer = ed.Quantizers.thresholder,
-        },
-        .@"floyd-steinberg" => ed.ErrorDiffusionOpts {
-            .diffuser = ed.Diffusers.floydSteinberg,
-            .diffuserLimits = ed.Diffusers.floydSteinbergLimits,
-            .quantizer = ed.Quantizers.thresholder,
-        },
-        .atkinson => ed.ErrorDiffusionOpts {
-            .diffuser = ed.Diffusers.atkinson,
-            .diffuserLimits = ed.Diffusers.atkinsonLimits,
-            .quantizer = ed.Quantizers.thresholder,
-        },
-        .jarvis => ed.ErrorDiffusionOpts {
-            .diffuser = ed.Diffusers.jarvis,
-            .diffuserLimits = ed.Diffusers.jarvisLimits,
-            .quantizer = ed.Quantizers.thresholder,
-        },
-        else => @panic("Invalid mode"),
+    // Downsample image
+    var resizedGrayImg = try bilinear.resample(gpa.allocator(), grayImg, grayImg.width / options.scale);
+    defer resizedGrayImg.deinit();
+
+    // try resizedGrayImg.writeToFilePath(options.output, .{ .png = .{} });
+
+    // Apply error-diffusion
+    var edImages = try switch (options.mode) {
+        .@"floyd-steinberg" => ed.floydSteinberg.errorDiffusion(gpa.allocator(), resizedGrayImg),
+        .atkinson           => ed.atkinson.errorDiffusion(gpa.allocator(), resizedGrayImg),
+        .ostromoukhov       => ed.ostromoukhov.errorDiffusion(gpa.allocator(), resizedGrayImg),
+        .@"zhou-fang"       => ed.zhouFang.errorDiffusion(gpa.allocator(), resizedGrayImg),
+        .@"zhou-fang-ectm"  => ed.zhouFangEctm.errorDiffusion(gpa.allocator(), resizedGrayImg),
+
+        .none, .grayscale => unreachable,
+        else => |mode| std.debug.panic("Mode '{s}' not implemented", .{ @tagName(mode) }),
     };
+    defer edImages[0].deinit();
+    defer edImages[1].deinit();
 
-    try ed.errorDiffusion(gpa.allocator(), grayImg, edOpts);
+    // try edImage.writeToFilePath(options.output, .{ .png = .{} });
 
-    try grayImg.writeToFilePath(options.output, .{ .png = .{} });
+    // Upscale image
+    var finalImg = try nearestNeighbour.resample(gpa.allocator(), edImages[0], edImages[0].width * options.scale);
+    defer finalImg.deinit();
+
+    var finalErr = try nearestNeighbour.resample(gpa.allocator(), edImages[1], edImages[1].width * options.scale);
+    defer finalErr.deinit();
+
+    try finalImg.writeToFilePath(options.output, .{ .png = .{} });
+
+    if (options.@"error") |err| {
+        try finalErr.writeToFilePath(err, .{ .png = .{} });
+    }
 }

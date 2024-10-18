@@ -5,23 +5,15 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "type": "lldb",
-            "request": "launch",
-            "name": "Debug",
-            "program": "${workspaceFolder}/zig-out/bin/halftone_2.exe",
-            "args": ["-i", "david.png", "-o", "david.l.png", "-g", "1.9"],
-            "cwd": "${workspaceFolder}"
-        },
-        {
             "name": "Launch Script",
             "type": "cppvsdbg",
             "request": "launch",
+            // "preLaunchTask": "zig build",
             "program": "${workspaceFolder}/zig-out/bin/halftone_2.exe",
-            "args": ["-i", "david.png", "-o", "david.l.png", "-g", "1.9"],
+            "args": ["-i", "cables.png", "-o", "owls_debug.png", "-g", "1.8", "-m", "zhou-fang-ectm", "-s", "1"],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
             "environment": [],
-            "externalConsole": false
         },
     ]
 }
