@@ -17,10 +17,10 @@ const Config = struct {
 const configs = [_]Config {
     .{ .mode = .grayscale,          .threshold = .constant, .name = "base" },
     .{ .mode = .@"floyd-steinberg", .threshold = .constant, .name = "fs" },
-    .{ .mode = .@"floyd-steinberg", .threshold = .entropy,  .name = "em-fs" },
+    .{ .mode = .@"floyd-steinberg", .threshold = .entropy,  .name = "fs-em" },
     .{ .mode = .ostromoukhov,       .threshold = .constant, .name = "o" },
     .{ .mode = .@"zhou-fang",       .threshold = .constant, .name = "zf" },
-    .{ .mode = .@"zhou-fang",       .threshold = .entropy,  .name = "em-zf" },
+    .{ .mode = .@"zhou-fang",       .threshold = .entropy,  .name = "zf-em" },
     .{ .mode = .xiangyu,            .threshold = .constant, .name = "x" },
 };
 
@@ -38,7 +38,7 @@ fn batch(allocator: Allocator, options: OptionsBatch) !void {
             .allocator = allocator,
         };
         defer allocator.free(programOptions.output);
-        
+
         if (programOptions.@"error" != null) {
             defer allocator.free(programOptions.@"error".?);
         }
