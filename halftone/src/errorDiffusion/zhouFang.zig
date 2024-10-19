@@ -169,18 +169,18 @@ fn modulation(value: f32) f32 {
     }
 }
 
-fn quantize(_: Gray8Image, x: usize, y: usize, value: f32) f32 {
+pub fn quantize(image: GrayImage, x: usize, y: usize, value: f32, tHolder: *const generic.ThresholderFn) f32 {
     var rng = std.rand.DefaultPrng.init(@shlWithOverflow(x, 16)[0] + y);
-    const rand = float(32, rng.next()) / float(32, std.math.maxInt(u64));
-    const mod = modulation(std.math.clamp(value, 0.0, 1.0));
-    const threshold = 0.5 + rand * mod;
-    return if (value < threshold) 0.0 else 1.0;
+    const random = float(32, rng.next()) / float(32, std.math.maxInt(u64));
+    const modulator = modulation(std.math.clamp(value, 0.0, 1.0));
+    const modulatedThreshold = tHolder(image, x, y, value) + random * modulator;
+    return if (value < modulatedThreshold) 0.0 else 1.0;
 }
 
-fn diffuse (
-    _: Gray8Image, 
-    quantized: Gray8Image, 
-    residuals: *Gray8Image, 
+pub fn diffuse (
+    _: GrayImage, 
+    quantized: GrayImage, 
+    residuals: *GrayImage, 
     direction: generic.PathDirection,
     x: usize, 
     y: usize, 
@@ -212,8 +212,8 @@ fn diffuse (
     }
 }
 
-pub fn errorDiffusion(allocator: Allocator, original: Image) !struct { Image, Image } {
-    return generic.errorDiffusion(allocator, original, .{ .quantize = quantize, .diffuse = diffuse, .path = .serpentine });
+pub fn errorDiffusion(allocator: Allocator, original: Image, thresholder: *const generic.ThresholderFn) anyerror!struct { Image, Image } {
+    return generic.errorDiffusion(allocator, original, .{ .quantize = quantize, .diffuse = diffuse, .thresholder = thresholder, .path = .scanline });
 }
 
 
@@ -230,7 +230,7 @@ const int = @import("../cast.zig").int;
 const uint = @import("../cast.zig").uint;
 const float = @import("../cast.zig").float;
 
-const Gray8Image = @import("../images.zig").Gray8Image;
+const GrayImage = @import("../images.zig").GrayImage;
 const ErrorImage = @import("../images.zig").ErrorImage;
 
 const generic = @import("generic.zig");

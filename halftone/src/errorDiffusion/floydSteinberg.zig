@@ -4,14 +4,14 @@ const coeffValues = [4]f32 { 3, 5, 1, 7 };
 const xOffsets = [4]isize { -1, 0, 1, 1 };
 const yOffsets = [4]isize { 1, 1, 1, 0 };
 
-fn quantize(_: Gray8Image, _: usize, _: usize, value: f32) f32 {
-    return if (value <= 0.5) 0 else 1.0;
+pub fn quantize(image: GrayImage, x: usize, y: usize, value: f32, tHolder: *const generic.ThresholderFn) f32 {
+    return if (value <= tHolder(image, x, y, value)) 0 else 1.0;
 }
 
 fn diffuse (
-    image: Gray8Image, 
-    _: Gray8Image, 
-    residuals: *Gray8Image, 
+    image: GrayImage, 
+    _: GrayImage, 
+    residuals: *GrayImage, 
     _: generic.PathDirection,
     x: usize, 
     y: usize, 
@@ -30,8 +30,8 @@ fn diffuse (
     }
 }
 
-pub fn errorDiffusion(allocator: Allocator, original: Image) !struct { Image, Image } {
-    return generic.errorDiffusion(allocator, original, .{ .quantize = quantize, .diffuse = diffuse, .path = .scanline });
+pub fn errorDiffusion(allocator: Allocator, original: Image, thresholder: *const generic.ThresholderFn) anyerror!struct { Image, Image } {
+    return generic.errorDiffusion(allocator, original, .{ .quantize = quantize, .diffuse = diffuse, .thresholder = thresholder, .path = .scanline });
 }
 
 
@@ -48,7 +48,7 @@ const int = @import("../cast.zig").int;
 const uint = @import("../cast.zig").uint;
 const float = @import("../cast.zig").float;
 
-const Gray8Image = @import("../images.zig").Gray8Image;
+const GrayImage = @import("../images.zig").GrayImage;
 const ErrorImage = @import("../images.zig").ErrorImage;
 
 const generic = @import("generic.zig");

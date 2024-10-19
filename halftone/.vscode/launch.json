@@ -10,7 +10,7 @@
             "request": "launch",
             // "preLaunchTask": "zig build",
             "program": "${workspaceFolder}/zig-out/bin/halftone_2.exe",
-            "args": ["-i", "cables.png", "-o", "owls_debug.png", "-g", "1.8", "-m", "zhou-fang-ectm", "-s", "1"],
+            "args": ["-i", "cables.png", "-o", "owls_debug.png", "-g", "1.8", "-m", "xiangyu", "-s", "1"],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
             "environment": [],

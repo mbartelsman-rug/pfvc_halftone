@@ -6,7 +6,7 @@ const int = @import("cast.zig").int;
 
 
 /// 8-bit grayscale image struct
-pub const Gray8Image = struct {
+pub const GrayImage = struct {
     const Self = @This();
 
     pixels: []f32,
@@ -14,13 +14,13 @@ pub const Gray8Image = struct {
     height: usize,
     allocator: Allocator,
 
-    /// Initialize a new Gray8Image to 0 values.
+    /// Initialize a new GrayImage to 0 values.
     /// `deinit()` must be called to avoid leaking memory.
     pub fn init(allocator: Allocator, width: usize, height: usize) !Self {
         const pixels = try allocator.alloc(f32, width * height);
         @memset(pixels, 0);
 
-        return Gray8Image {
+        return GrayImage {
             .pixels = pixels,
             .width = width,
             .height = height,
@@ -28,7 +28,7 @@ pub const Gray8Image = struct {
         };
     }
 
-    /// Initialize a new Gray8Image by copying a byte buffer.
+    /// Initialize a new GrayImage by copying a byte buffer.
     /// `deinit()` must be called to avoid leaking memory.
     pub fn fromBytes(allocator: Allocator, width: usize, height: usize, bytes: []const u8) !Self {
         std.debug.assert(bytes.len == width * height);
@@ -38,7 +38,7 @@ pub const Gray8Image = struct {
             pixels[i] = float(32, bytes[i]) / 255.0;
         }
 
-        const image = Gray8Image {
+        const image = GrayImage {
             .pixels = pixels,
             .width = width,
             .height = height,
@@ -48,7 +48,7 @@ pub const Gray8Image = struct {
         return image;
     }
 
-    /// Initialize a new Gray8Image by copying a byte buffer.
+    /// Initialize a new GrayImage by copying a byte buffer.
     /// `deinit()` must be called to avoid leaking memory.
     pub fn toBytes(self: *Self) ![]const u8 {
         const pixels = try self.allocator.alloc(u8, self.pixels.len);
