@@ -25,7 +25,7 @@ var I=Object.defineProperty;var M=(t,e,n)=>e in t?I(t,e,{enumerable:!0,configura
             <p>To do this on Windows, press "Start" and search for "Calibrate display color". This will open an assistant tool that will walk you through the process. The first part of this process is the gamma calibration. After calibrating the gamma, there's a brightness/contrast step and a color calibration step, you may skip these.</p>\r
             <p>If you don't want to change your display settings permanently, all you need to do is (1) select "current calibration", (2) run the experiment, and (3) cancel the calibration.</p>\r
             <div style="text-align: center;">\r
-                <img src="./public/img/calibrate.png">\r
+                <img src="./img/calibrate.png">\r
             </div>\r
         </article>\r
     <!-- </div> -->\r
