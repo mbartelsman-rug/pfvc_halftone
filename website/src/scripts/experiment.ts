@@ -1,5 +1,3 @@
-// import '../data/configuration.json'
-
 export enum Choice {
     Left,
     Right,
