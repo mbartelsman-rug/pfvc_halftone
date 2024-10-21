@@ -68,7 +68,7 @@ function setupShow(task: ShowTask): void {
         return;
     }
 
-    img.src = "./public/img/" + task.id + "/base.png";
+    img.src = "./img/" + task.id + "/base.png";
 }
 
 function setupChoice(task: ChoiceTask): void {
@@ -88,8 +88,8 @@ function setupChoice(task: ChoiceTask): void {
     left.addEventListener("click", (_) => { choose(Choice.Left) });
     right.addEventListener("click", (_) => { choose(Choice.Right) });
 
-    left.src = "./public/img/" + task.id + "/" + task.left + ".png";
-    right.src = "./public/img/" + task.id + "/" + task.right + ".png";
+    left.src = "./img/" + task.id + "/" + task.left + ".png";
+    right.src = "./img/" + task.id + "/" + task.right + ".png";
 }
 
 function choose(choice: Choice | null): void {
