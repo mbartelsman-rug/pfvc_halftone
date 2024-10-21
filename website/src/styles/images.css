@@ -1,0 +1,36 @@
+
+.image-container {
+    padding: 5px;
+    border-radius: 10px;
+}
+
+.image-container img {
+    image-rendering: pixelated;
+    display: block;
+    margin: 0;
+
+    cursor: pointer;
+}
+
+@media (orientation: landscape) {
+    .unmarked-choice {
+        border-bottom: 5px solid #333;
+    }
+    .selected-choice {
+        border-bottom: 5px solid #2a7942;
+    }
+    .other-choice {
+        border-bottom: 5px solid #131313;
+    }
+}
+@media (orientation: portrait) {
+    .unmarked-choice {
+        border-left: 5px solid #333;
+    }
+    .selected-choice {
+        border-left: 5px solid #2a7942;
+    }
+    .other-choice {
+        border-left: 5px solid #131313;
+    }
+}

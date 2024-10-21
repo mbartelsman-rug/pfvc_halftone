@@ -1,0 +1,56 @@
+{
+    "trials": 100,
+    "wait_ms": 2000,
+    "algorithms": [
+        {
+            "id": "fs",
+            "name": "Floyd-Steinberg",
+            "enabled": true
+        },
+        {
+            "id": "fs-em",
+            "name": "Floyd-Steinberg (ECTM)",
+            "enabled": true
+        },
+        {
+            "id": "o",
+            "name": "Ostromoukhov",
+            "enabled": false
+        },
+        {
+            "id": "zf",
+            "name": "Zhou-Fang",
+            "enabled": true
+        },
+        {
+            "id": "zf-em",
+            "name": "Zhou-Fang (ECTM)",
+            "enabled": true
+        },
+        {
+            "id": "x",
+            "name": "Xiangyu",
+            "enabled": true
+        }
+    ],
+    "images": [
+        "bedouin",
+        "botanic",
+        "calanque",
+        "calculator",
+        "carceri",
+        "cd",
+        "conch",
+        "crypt",
+        "ernte",
+        "espinasse",
+        "imaginary",
+        "lines",
+        "owls",
+        "renoir",
+        "sagarmatha",
+        "snow",
+        "text",
+        "trefoil"
+    ]
+}
