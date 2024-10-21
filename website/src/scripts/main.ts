@@ -158,7 +158,7 @@ function setupGoodbye(_: GoodbyeTask): void {
         return;
     }
 
-    results.value = JSON.stringify(experiment);
+    results.value = JSON.stringify(experiment.tasks.filter(task => task instanceof ChoiceTask));
 }
 
 function onClickNextTask(this: HTMLButtonElement, _: MouseEvent): void {
