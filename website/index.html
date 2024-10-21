@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vite + Vue + TS</title>
+    <link rel="stylesheet" href="/src/style.css">
+    <style>
+      .experiment-container {
+        margin: 0 auto;
+        display: flex;
+        flex-flow: column;
+        align-items: flex-start;
+        justify-content: start;
+      }
+      .condition-container {
+        display: flex;
+        flex-flow: row wrap;
+        align-items: stretch;
+        justify-content: center;
+      }
+      .nav-container {
+        margin: 0 auto;
+        display: flex;
+        flex-flow: row wrap;
+        align-items: stretch;
+        justify-content: center;
+      }
+      .sample-container {
+        width: calc(100px + 14vw);
+        margin: 1em;
+        padding: 1em;
+        border: 1px solid #fff2;
+      }
+      .sample-img {
+        max-width: 100%;
+      }
+      .sample-rank-container {
+        text-align: left;
+        margin-top: 1em;
+        width: 100%;
+        display: flex;
+        flex-flow: row wrap;
+        align-items: stretch;
+        justify-content: center;
+      }
+      .sample-rank-option {
+        margin: 0.25em 0.25em;
+      }
+      .nav-button {
+        width: 15vw;
+        min-width: fit-content;
+        margin: 0.25em 0.5em;
+      }
+    </style>
+    <script src="./src/main.ts"></script>
+  </head>
+  <body>
+    <form action="" class="experiment-container">
+      <div class="condition-container">
+        <div class="sample-container">
+          <img id="image-1" class="sample-img" src="https://placehold.co/600x600">
+          <div class="sample-rank-container">
+            <button id="vote-11" class="sample-rank-option" type="button" onclick="vote(1, 1)">&nbsp;A&nbsp;</button>
+            <button id="vote-12" class="sample-rank-option" type="button" onclick="vote(1, 2)">&nbsp;B&nbsp;</button>
+            <button id="vote-13" class="sample-rank-option" type="button" onclick="vote(1, 3)">&nbsp;C&nbsp;</button>
+            <button id="vote-14" class="sample-rank-option" type="button" onclick="vote(1, 4)">&nbsp;D&nbsp;</button>
+          </div>
+        </div>
+        <div class="sample-container">
+          <img id="image-2" class="sample-img" src="https://placehold.co/600x600">
+          <div class="sample-rank-container">
+            <button id="vote-21" class="sample-rank-option" type="button" onclick="vote(2, 1)">&nbsp;A&nbsp;</button>
+            <button id="vote-22" class="sample-rank-option" type="button" onclick="vote(2, 2)">&nbsp;B&nbsp;</button>
+            <button id="vote-23" class="sample-rank-option" type="button" onclick="vote(2, 3)">&nbsp;C&nbsp;</button>
+            <button id="vote-24" class="sample-rank-option" type="button" onclick="vote(2, 4)">&nbsp;D&nbsp;</button>
+          </div>
+        </div>
+        <div class="sample-container">
+          <img id="image-3" class="sample-img" src="https://placehold.co/600x600">
+          <div class="sample-rank-container">
+            <button id="vote-31" class="sample-rank-option" type="button" onclick="vote(3, 1)">&nbsp;A&nbsp;</button>
+            <button id="vote-32" class="sample-rank-option" type="button" onclick="vote(3, 2)">&nbsp;B&nbsp;</button>
+            <button id="vote-33" class="sample-rank-option" type="button" onclick="vote(3, 3)">&nbsp;C&nbsp;</button>
+            <button id="vote-34" class="sample-rank-option" type="button" onclick="vote(3, 4)">&nbsp;D&nbsp;</button>
+          </div>
+        </div>
+        <div class="sample-container">
+          <img id="image-4" class="sample-img" src="https://placehold.co/600x600">
+          <div class="sample-rank-container">
+            <button id="vote-41" class="sample-rank-option" type="button" onclick="vote(4, 1)">&nbsp;A&nbsp;</button>
+            <button id="vote-42" class="sample-rank-option" type="button" onclick="vote(4, 2)">&nbsp;B&nbsp;</button>
+            <button id="vote-43" class="sample-rank-option" type="button" onclick="vote(4, 3)">&nbsp;C&nbsp;</button>
+            <button id="vote-44" class="sample-rank-option" type="button" onclick="vote(4, 4)">&nbsp;D&nbsp;</button>
+          </div>
+        </div>
+      </div>
+      <div class="nav-container">
+        <button id="Prev" class="nav-button" type="button" onclick="prevTask()">&nbsp;Previous&nbsp;</button>
+        <button id="Next" class="nav-button" type="button" onclick="nextTask()">&nbsp;Next&nbsp;</button>
+      </div>
+    </form>
+  </body>
+</html>
