@@ -131,7 +131,7 @@ function setupWait(task: WaitTask): void {
     const interval = setInterval(() => {
         if ( document.hasFocus() ) {
             if (task.remaining > 0) {
-                counter.innerText = "Please wait " + String(Math.round(task.remaining / 100) / 10) + " seconds..."
+                counter.innerText = "Please wait " + String(Math.ceil(task.remaining / 1000)) + " seconds..."
             }
             else {
                 if (once) {

@@ -1,5 +1,5 @@
 {
-    "trials": 100,
+    "trials": 40,
     "wait_ms": 2000,
     "algorithms": [
         {
