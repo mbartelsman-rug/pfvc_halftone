@@ -4,6 +4,28 @@ body {
     height: 100vh;
 }
 
+#floating-help {
+    position: absolute;
+    top: 1em;
+    left: 1em;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.hover-content {
+    position: absolute;
+    top: 4em;
+    left: 4em;
+    font-size: 80%;
+    width: 30em;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 #experiment {
     width: 100vw;
     height: 100vh;

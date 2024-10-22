@@ -107,12 +107,16 @@ export class Experiment {
         this.tasks = [];
         this.tasks.push(new IntroTask());
         this.tasks.push(new CalibrateTask());
+        
+        let pairs = getPairs(algorithms);
+        let pairChoice = getRandom(pairs);
+        let imageChoice = getRandom(images);
+
         for (const i of Array(trials).keys()) {
-            const image = getNFrom(1, images)[0];
-            const [left, right] = getNFrom(2, algorithms);
-            
-            this.tasks.push(new ShowTask(image));
-            this.tasks.push(new ChoiceTask(image, left.id, right.id));
+            const img = imageChoice.next().value;
+            const pair = pairChoice.next().value;
+            this.tasks.push(new ShowTask(img));
+            this.tasks.push(new ChoiceTask(img, pair[0].id, pair[1].id));
 
             if (i < trials - 1)
                 this.tasks.push(new WaitTask(configuration.wait_ms));
@@ -177,9 +181,9 @@ export interface Configuration {
     wait_ms: number,
 };
 
-function getNFrom<T>(count: number, array: T[]): T[] {
-    let indices = [...Array(array.length).keys()];
-    let currentIndex = indices.length;
+function shuffle(count: number): number[] {
+    let indices = [...Array(count).keys()];
+    let currentIndex = count;
   
     // While there remain elements to shuffle...
     while (currentIndex != 0) {
@@ -190,6 +194,23 @@ function getNFrom<T>(count: number, array: T[]): T[] {
         // And swap it with the current element.
         [indices[currentIndex], indices[randomIndex]] = [indices[randomIndex], indices[currentIndex]];
     }
-    let result = indices.slice(0, count).map((value) => array[value]);
-    return result;
+    return indices;
+}
+
+function getPairs<T>(list: T[]): [T, T][] {
+    return list.flatMap(e1 => list.map(e2 => [e1, e2]) as [T, T][]);
+}
+
+function* getRandom<T>(list: T[]): Generator<T> {
+    let bag = shuffle(list.length);
+    let i = 0;
+    while (true) {
+        yield list[bag[i]];
+        i++;
+
+        if (i == list.length) {
+            i = 0;
+            bag = shuffle(list.length);
+        }
+    }
 }
