@@ -13,6 +13,9 @@
 }
 
 @media (orientation: landscape) {
+    .image-container {
+        margin: 0 5px;
+    }
     .unmarked-choice {
         border-bottom: 5px solid #333;
     }
@@ -24,6 +27,9 @@
     }
 }
 @media (orientation: portrait) {
+    .image-container {
+        margin: 5px 0;
+    }
     .unmarked-choice {
         border-left: 5px solid #333;
     }
