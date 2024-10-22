@@ -6,6 +6,32 @@
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
+#floating-help {
+    width: 3em;
+    height: 3em;
+    background-color: #666;
+    color: #FFF;
+    border: 1px solid #888;
+    border-radius: 100%;
+    cursor: pointer;
+}
+
+.hover-content {
+    background-color: #666;
+    color: #FFF;
+    border: 1px solid #888;
+    border-radius: 0 1em 1em 1em;
+    padding: 1.5em;
+}
+
+#floating-help .hover-content {
+    display: none;
+}
+
+#floating-help:hover .hover-content {
+    display: block;
+}
+
 #experiment {
     display: flex;
     justify-content: center;
