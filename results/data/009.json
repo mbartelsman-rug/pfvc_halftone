@@ -1,0 +1,242 @@
+[
+    {
+        "id": "text",
+        "left": "fs",
+        "right": "fs-em",
+        "choice": 0
+    },
+    {
+        "id": "conch",
+        "left": "zf",
+        "right": "x",
+        "choice": 0
+    },
+    {
+        "id": "imaginary",
+        "left": "zf",
+        "right": "zf-em",
+        "choice": 1
+    },
+    {
+        "id": "bedouin",
+        "left": "zf",
+        "right": "fs-em",
+        "choice": 1
+    },
+    {
+        "id": "cd",
+        "left": "x",
+        "right": "zf-em",
+        "choice": 0
+    },
+    {
+        "id": "botanic",
+        "left": "zf-em",
+        "right": "x",
+        "choice": 1
+    },
+    {
+        "id": "owls",
+        "left": "fs",
+        "right": "zf",
+        "choice": 0
+    },
+    {
+        "id": "lines",
+        "left": "zf-em",
+        "right": "fs",
+        "choice": 1
+    },
+    {
+        "id": "crypt",
+        "left": "x",
+        "right": "zf",
+        "choice": 0
+    },
+    {
+        "id": "calanque",
+        "left": "x",
+        "right": "x",
+        "choice": 0
+    },
+    {
+        "id": "calculator",
+        "left": "x",
+        "right": "fs",
+        "choice": 1
+    },
+    {
+        "id": "ernte",
+        "left": "fs",
+        "right": "x",
+        "choice": 1
+    },
+    {
+        "id": "carceri",
+        "left": "fs",
+        "right": "fs",
+        "choice": 1
+    },
+    {
+        "id": "snow",
+        "left": "fs-em",
+        "right": "fs-em",
+        "choice": 0
+    },
+    {
+        "id": "sagarmatha",
+        "left": "fs-em",
+        "right": "zf-em",
+        "choice": 1
+    },
+    {
+        "id": "espinasse",
+        "left": "zf-em",
+        "right": "zf",
+        "choice": 1
+    },
+    {
+        "id": "renoir",
+        "left": "zf-em",
+        "right": "fs-em",
+        "choice": 0
+    },
+    {
+        "id": "trefoil",
+        "left": "fs-em",
+        "right": "fs",
+        "choice": 1
+    },
+    {
+        "id": "trefoil",
+        "left": "fs-em",
+        "right": "zf",
+        "choice": 0
+    },
+    {
+        "id": "sagarmatha",
+        "left": "zf",
+        "right": "fs",
+        "choice": 0
+    },
+    {
+        "id": "ernte",
+        "left": "zf-em",
+        "right": "zf-em",
+        "choice": 0
+    },
+    {
+        "id": "renoir",
+        "left": "x",
+        "right": "fs-em",
+        "choice": 0
+    },
+    {
+        "id": "snow",
+        "left": "zf",
+        "right": "zf",
+        "choice": 1
+    },
+    {
+        "id": "calculator",
+        "left": "fs-em",
+        "right": "x",
+        "choice": 1
+    },
+    {
+        "id": "bedouin",
+        "left": "fs",
+        "right": "zf-em",
+        "choice": 1
+    },
+    {
+        "id": "owls",
+        "left": "fs",
+        "right": "fs",
+        "choice": 0
+    },
+    {
+        "id": "text",
+        "left": "fs",
+        "right": "x",
+        "choice": 0
+    },
+    {
+        "id": "botanic",
+        "left": "fs-em",
+        "right": "zf-em",
+        "choice": 1
+    },
+    {
+        "id": "espinasse",
+        "left": "fs",
+        "right": "zf",
+        "choice": 1
+    },
+    {
+        "id": "carceri",
+        "left": "zf",
+        "right": "x",
+        "choice": 0
+    },
+    {
+        "id": "imaginary",
+        "left": "fs",
+        "right": "fs-em",
+        "choice": 0
+    },
+    {
+        "id": "cd",
+        "left": "zf",
+        "right": "zf",
+        "choice": 1
+    },
+    {
+        "id": "lines",
+        "left": "zf-em",
+        "right": "fs-em",
+        "choice": 1
+    },
+    {
+        "id": "crypt",
+        "left": "x",
+        "right": "x",
+        "choice": 1
+    },
+    {
+        "id": "calanque",
+        "left": "fs-em",
+        "right": "fs",
+        "choice": 1
+    },
+    {
+        "id": "conch",
+        "left": "zf",
+        "right": "fs-em",
+        "choice": 0
+    },
+    {
+        "id": "crypt",
+        "left": "fs-em",
+        "right": "zf",
+        "choice": 1
+    },
+    {
+        "id": "espinasse",
+        "left": "x",
+        "right": "zf-em",
+        "choice": 1
+    },
+    {
+        "id": "owls",
+        "left": "fs",
+        "right": "zf-em",
+        "choice": 0
+    },
+    {
+        "id": "bedouin",
+        "left": "zf-em",
+        "right": "zf",
+        "choice": 0
+    }
+]
